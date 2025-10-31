@@ -90,14 +90,12 @@ export default function CalculatorPage() {
 		return { normalCost, smartCost, diff };
 	}, [normalDetail, smartDetail, borrowAmount, days]);
 
-	// Show the full list for both dropdowns. Smart/normal differences are handled when fetching detail.
+	// Filter vaults properly - no fallback that mixes smart and normal vaults
     const normalOptions = useMemo(() => {
-        const normals = vaults.filter((v) => !v.isSmart);
-        return normals.length > 0 ? normals : vaults; // fallback: show all if chain has only smart vaults
+        return vaults.filter((v) => !v.isSmart);
     }, [vaults]);
     const smartOptions = useMemo(() => {
-        const smarts = vaults.filter((v) => v.isSmart);
-        return smarts.length > 0 ? smarts : vaults; // fallback: show all
+        return vaults.filter((v) => v.isSmart);
     }, [vaults]);
 
     function renderVaultLabel(v: VaultOption): string {
